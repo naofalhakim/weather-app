@@ -95,12 +95,17 @@ const AdditionalInfo = styled.div`
 class WeatherLanding extends React.Component {
   constructor(props) {
     super(props);
-
+    this.intervalID = "";
     this.location = "Indonesia, Jakarta";
   }
 
   componentDidMount() {
     this.props.getForcastData();
+    this.intervalID = setInterval(() => this.props.getForcastData(), 300000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalID);
   }
 
   render() {
@@ -135,6 +140,7 @@ class WeatherLanding extends React.Component {
             )
           )}
         </WeatherContainer>
+        <CaptionText>Last update at :{" " + new Date().toString()}</CaptionText>
       </Page>
     );
   }

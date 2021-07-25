@@ -3,6 +3,7 @@ import { GET_FORCAST_DATA } from "./action-type";
 import { fetchActionTemplate } from "./helper";
 
 export const getForcastData = (params) => async (dispatch) => {
+  console.log("getForcastData");
   return await fetchActionTemplate()(GET_FORCAST_DATA, dispatch, {
     url: WEATHER_URL.FORECAST,
     params,
