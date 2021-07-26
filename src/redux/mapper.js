@@ -42,9 +42,27 @@ const hourlyDataMapper = (list) => {
   return dateListHourly;
 };
 
-export const forcastDataMapper = (fetchedData) => {
-  console.log(fetchedData, "fetchedData");
+const selectingIndex = () => {
+  let timeNow = new Date();
 
+  if (timeNow >= 0 && timeNow <= 3) {
+    return 0;
+  } else if (timeNow > 3 && timeNow <= 6) {
+    return 1;
+  } else if (timeNow > 6 && timeNow <= 9) {
+    return 2;
+  } else if (timeNow > 9 && timeNow <= 12) {
+    return 3;
+  } else if (timeNow > 15 && timeNow <= 18) {
+    return 4;
+  } else if (timeNow > 18 && timeNow <= 21) {
+    return 5;
+  } else if (timeNow > 21 && timeNow <= 23) {
+    return 6;
+  }
+};
+
+export const forcastDataMapper = (fetchedData) => {
   let city = get(fetchedData, "city");
   let list = get(fetchedData, "list");
 
@@ -54,9 +72,14 @@ export const forcastDataMapper = (fetchedData) => {
   list.map((item) => listMapped.push(objectMapper(item)));
 
   let listHourly = hourlyDataMapper(listMapped);
-//   listHourly.shift();
 
-  listHourly.map((item) => listForecast.push(item[0]));
+  if (listHourly.length > 5) {
+    listHourly.pop();
+  }
+
+  listHourly.map((item) =>
+    listForecast.push(item[selectingIndex()] || item[item.length - 1])
+  );
 
   return { city, listForecast, listHourly };
 };
