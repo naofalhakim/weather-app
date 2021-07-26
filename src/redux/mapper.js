@@ -44,7 +44,6 @@ const hourlyDataMapper = (list) => {
 
 export const forcastDataMapper = (fetchedData) => {
   console.log(fetchedData, "fetchedData");
-  let date = new Date();
 
   let city = get(fetchedData, "city");
   let list = get(fetchedData, "list");
@@ -55,7 +54,7 @@ export const forcastDataMapper = (fetchedData) => {
   list.map((item) => listMapped.push(objectMapper(item)));
 
   let listHourly = hourlyDataMapper(listMapped);
-  listHourly.shift();
+//   listHourly.shift();
 
   listHourly.map((item) => listForecast.push(item[0]));
 
